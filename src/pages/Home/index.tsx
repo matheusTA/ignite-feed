@@ -1,3 +1,4 @@
+import Post from "../../components/Post";
 import Sidebar from "../../components/Sidebar";
 import styles from "./styles.module.css";
 
@@ -6,7 +7,8 @@ const Home = () => {
     <div className={styles.wrapper}>
       <Sidebar />
       <main>
-        <div>postagem</div>
+        <Post />
+        <Post />
       </main>
     </div>
   );
