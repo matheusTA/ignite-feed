@@ -1,14 +1,21 @@
 import Post from "../../components/Post";
 import Sidebar from "../../components/Sidebar";
 import styles from "./styles.module.css";
+import { postsMock } from "../../mocks/posts";
 
 const Home = () => {
   return (
     <div className={styles.wrapper}>
       <Sidebar />
       <main>
-        <Post />
-        <Post />
+        {postsMock.map(({ id, author, comment, publishedAt }) => (
+          <Post
+            id={id}
+            author={author}
+            comment={comment}
+            publishedAt={publishedAt}
+          />
+        ))}
       </main>
     </div>
   );
