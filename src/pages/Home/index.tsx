@@ -10,6 +10,7 @@ const Home = () => {
       <main>
         {postsMock.map(({ id, author, comment, publishedAt }) => (
           <Post
+            key={id}
             id={id}
             author={author}
             comment={comment}

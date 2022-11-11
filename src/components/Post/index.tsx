@@ -1,11 +1,17 @@
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
+import { useState } from "react";
 import { Post as PostProps } from "../../models/Post";
 import Avatar from "../Avatar";
-import Comment from "../Comment";
+import CommentReply from "../CommentReply";
 import styles from "./styles.module.css";
 
 const Post = ({ id, author, comment, publishedAt }: PostProps) => {
+  const [commentReplies, setCommentReplies] = useState([
+    "Respondendo um comentario",
+  ]);
+  const [commentReply, setCommentReply] = useState("");
+
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
@@ -16,6 +22,15 @@ const Post = ({ id, author, comment, publishedAt }: PostProps) => {
     locale: ptBR,
     addSuffix: true,
   });
+
+  const handleCreateNewCommentReply = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    setCommentReplies([...commentReplies, commentReply]);
+    setCommentReply("");
+  };
 
   return (
     <article className={styles.post}>
@@ -40,19 +55,26 @@ const Post = ({ id, author, comment, publishedAt }: PostProps) => {
       <div className={styles.content}>
         {comment.map(({ type, content }) =>
           type === "paragraph" ? (
-            <p>{content}</p>
+            <p key={content}>{content}</p>
           ) : (
-            <p>
+            <p key={content}>
               <a href="#">{content}</a>
             </p>
           )
         )}
       </div>
 
-      <form className={styles.commentForm}>
+      <form
+        className={styles.commentForm}
+        onSubmit={(e) => handleCreateNewCommentReply(e)}
+      >
         <strong>Deixe seu feedback</strong>
 
-        <textarea placeholder="Deixe um comentário" />
+        <textarea
+          placeholder="Deixe um comentário"
+          value={commentReply}
+          onChange={(e) => setCommentReply(e.target.value)}
+        />
 
         <footer>
           <button type="submit">Publicar</button>
@@ -60,9 +82,9 @@ const Post = ({ id, author, comment, publishedAt }: PostProps) => {
       </form>
 
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {commentReplies.map((commentReply) => (
+          <CommentReply key={commentReply} content={commentReply} />
+        ))}
       </div>
     </article>
   );

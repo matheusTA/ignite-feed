@@ -2,7 +2,11 @@ import { ThumbsUp, Trash } from "phosphor-react";
 import Avatar from "../Avatar";
 import styles from "./styles.module.css";
 
-const Comment = () => {
+interface CommentReplyProps {
+  content: string;
+}
+
+const CommentReply = ({ content }: CommentReplyProps) => {
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} src="https://github.com/matheusTA.png" />
@@ -25,7 +29,7 @@ const Comment = () => {
             </button>
           </header>
 
-          <p>Muito bom Devon, parabens!!</p>
+          <p>{content}</p>
         </div>
 
         <footer>
@@ -39,4 +43,4 @@ const Comment = () => {
   );
 };
 
-export default Comment;
+export default CommentReply;
