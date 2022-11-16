@@ -4,9 +4,14 @@ import styles from "./styles.module.css";
 
 interface CommentReplyProps {
   content: string;
+  onDeleteCommentReply: (commentReplyToDelete: string) => void;
 }
 
-const CommentReply = ({ content }: CommentReplyProps) => {
+const CommentReply = ({ content, onDeleteCommentReply }: CommentReplyProps) => {
+  const handleDeleteCommentReply = (commentReplyToDelete: string) => {
+    onDeleteCommentReply(commentReplyToDelete);
+  };
+
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} src="https://github.com/matheusTA.png" />
@@ -24,7 +29,11 @@ const CommentReply = ({ content }: CommentReplyProps) => {
               </time>
             </div>
 
-            <button title="Deletar comentário">
+            <button
+              title="Deletar comentário"
+              onClick={() => handleDeleteCommentReply(content)}
+              type="button"
+            >
               <Trash size={24} />
             </button>
           </header>

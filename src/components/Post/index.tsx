@@ -32,6 +32,14 @@ const Post = ({ id, author, comment, publishedAt }: PostProps) => {
     setCommentReply("");
   };
 
+  const deleteCommentReply = (commentReplyToDelete: string) => {
+    const commentsWithoutDeletedOne = commentReplies.filter(
+      (commentReply) => commentReply !== commentReplyToDelete
+    );
+
+    setCommentReplies(commentsWithoutDeletedOne);
+  };
+
   return (
     <article className={styles.post}>
       <header className={styles.header}>
@@ -83,7 +91,11 @@ const Post = ({ id, author, comment, publishedAt }: PostProps) => {
 
       <div className={styles.commentList}>
         {commentReplies.map((commentReply) => (
-          <CommentReply key={commentReply} content={commentReply} />
+          <CommentReply
+            key={commentReply}
+            content={commentReply}
+            onDeleteCommentReply={deleteCommentReply}
+          />
         ))}
       </div>
     </article>
