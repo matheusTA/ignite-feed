@@ -7,9 +7,7 @@ import CommentReply from "../CommentReply";
 import styles from "./styles.module.css";
 
 const Post = ({ id, author, comment, publishedAt }: PostProps) => {
-  const [commentReplies, setCommentReplies] = useState([
-    "Respondendo um comentario",
-  ]);
+  const [commentReplies, setCommentReplies] = useState<string[]>([]);
   const [commentReply, setCommentReply] = useState("");
 
   const publishedDateFormatted = format(
@@ -22,6 +20,8 @@ const Post = ({ id, author, comment, publishedAt }: PostProps) => {
     locale: ptBR,
     addSuffix: true,
   });
+
+  const isCommentReplyEmpty = () => commentReply.length === 0;
 
   const handleCreateNewCommentReply = (
     event: React.FormEvent<HTMLFormElement>
@@ -79,13 +79,16 @@ const Post = ({ id, author, comment, publishedAt }: PostProps) => {
         <strong>Deixe seu feedback</strong>
 
         <textarea
+          required
           placeholder="Deixe um comentário"
           value={commentReply}
           onChange={(e) => setCommentReply(e.target.value)}
         />
 
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={isCommentReplyEmpty()}>
+            Publicar
+          </button>
         </footer>
       </form>
 
